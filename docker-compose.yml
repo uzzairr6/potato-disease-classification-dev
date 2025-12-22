@@ -1,0 +1,32 @@
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "${API_PORT}:8000"
+    volumes:
+      - ${MODEL_PATH}:/app/saved_model
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - ${DOCKER_NETWORK_NAME}
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    environment:
+      - VITE_API_URL=http://api:8000/predict
+    depends_on:
+      - api
+    networks:
+      - ${DOCKER_NETWORK_NAME}
+
+networks:
+  potato-disease-network:
+    driver: bridge

@@ -1,0 +1,10 @@
+tensorflow==2.5.0
+fastapi==0.68.1
+uvicorn==0.15.0
+python-multipart
+starlette==0.14.2
+pillow
+tensorflow-serving-api==2.5.0
+matplotlib
+numpy
+python-jose[cryptography]
