@@ -204,3 +204,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 *Protect your harvest before it's too late with AI-powered potato disease detection.*
 "# potato-disease-classification-dev" 
+"# potato-disease-classification-dev" 
