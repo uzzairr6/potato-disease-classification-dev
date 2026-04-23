@@ -115,12 +115,10 @@ app.add_middleware(
 
 app.include_router(auth_router)
 
-BASE_DIR = Path(__file__).resolve().parents[2]  # repo root
-
+BASE_DIR = Path(__file__).resolve().parent
 candidate_paths = [
     BASE_DIR / "saved_model",
     BASE_DIR / "potatoes.h5",
-    BASE_DIR / "saved_models" / "potatoes.h5",
 ]
 
 MODEL_PATH = next((p for p in candidate_paths if p.exists()), None)
@@ -131,6 +129,11 @@ if MODEL_PATH is None:
     )
 
 logger.info(f"Loading model from: {MODEL_PATH}")
+import os
+
+print("APP FILES:", os.listdir("/app"))
+print("SAVED_MODEL EXISTS:", os.path.exists("/app/saved_model"))
+print("SAVED_MODEL FILES:", os.listdir("/app/saved_model") if os.path.exists("/app/saved_model") else "missing")
 MODEL = tf.keras.models.load_model(str(MODEL_PATH))
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
@@ -170,4 +173,4 @@ async def predict(
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    uvicorn.run(app, host='localhost', port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
